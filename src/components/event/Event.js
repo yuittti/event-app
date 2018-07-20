@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text} from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
 import { eventList } from '../../fixtures';
 
 class Event extends Component {
@@ -14,6 +14,9 @@ class Event extends Component {
                 <Text style={[styles.text, styles.header]}>{event.title}</Text>
                 <Text style={styles.text}>{event.when}</Text>
                 <Text style={styles.text}>{event.where}</Text>
+                <Image 
+                    style={styles.image} 
+                    source={{uri: 'http://lorempixel.com/400/200/technics/'}} />
                 <Text style={styles.text}>{event.url}</Text>
             </View>
         );
@@ -35,11 +38,16 @@ const styles = StyleSheet.create({
         shadowOffset: {
             height: 2,
             width: 0
-        }
+        },
+        elevation: 5
     },
     text: {
         padding: 10,
         width: '100%'
+    },
+    image: {
+        width: 200,
+        height: 100
     }
 })
  
