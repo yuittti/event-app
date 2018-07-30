@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import SignIn from './components/auth/SignIn';
 import Hello from './components/Hello';
 import EventList from './components/event/EventList';
+import Event from './components/event/Event';
 
 class Root extends Component {
     render() { 
@@ -15,7 +16,7 @@ class Root extends Component {
                 />
                 <SignIn />
                 <Hello />
-                <EventList />
+                <Event />
             </View>
         );
     }

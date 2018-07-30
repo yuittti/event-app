@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, Button } from 'react-native';
 import { eventList } from '../../fixtures';
+import ConfirmModal from '../common/ConfirmModal';
 
 class Event extends Component {
     static defaultProps = {
         event: eventList[0]
+    }
+
+    state = {
+        confirmModal: false
     }
 
     render() { 
@@ -12,15 +17,40 @@ class Event extends Component {
         return (
             <View style={styles.container}>
                 <Text style={[styles.text, styles.header]}>{event.title}</Text>
-                <Text style={styles.text}>{event.when}</Text>
-                <Text style={styles.text}>{event.where}</Text>
                 <Image 
                     style={styles.image} 
-                    source={{uri: 'http://lorempixel.com/400/200/technics/'}} />
+                    source={{uri: 'https://picsum.photos/200/100?random'}} />
+                <Text style={styles.text}>{event.when}</Text>
+                <Text style={styles.text}>{event.where}</Text>
                 <Text style={styles.text}>{event.url}</Text>
+
+                <View style={styles.button}>
+                    <Button 
+                        onPress={this.handleDelete}
+                        title='Delete Event'
+                        color='#F55'
+                    />
+                </View>
+
+                <ConfirmModal 
+                    visible={this.state.confirmModal}
+                    onConfirm={this.confirmDelete}
+                    onCancel={this.cancelDelete}
+                >
+                    Are you sure you want to delete '{event.title}'
+                </ConfirmModal>
             </View>
         );
     }
+
+    handleDelete = () => {
+        this.setState({
+            confirmModal: true
+        });
+    };
+
+    confirmDelete = () => this.setState({ confirmModal: false });
+    cancelDelete = () => this.setState({ confirmModal: false });
 }
 
 const styles = StyleSheet.create({
@@ -29,7 +59,8 @@ const styles = StyleSheet.create({
         borderBottomColor: '#000',
         borderBottomWidth: 1,
         borderTopColor: '#000',
-        borderTopWidth: 1
+        borderTopWidth: 1,
+        alignItems: 'center'
     },
     header: {
         backgroundColor: '#F2F2F2',
