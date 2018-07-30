@@ -1,28 +1,25 @@
 import React, { Component } from 'react';
+import { observer } from 'mobx-react';
 import { View, Text, TextInput, Platform, TouchableOpacity } from 'react-native';
+import userStore from '../../stores/user';
 
+@observer
 class SignIn extends Component {
-    state = {
-        email: '',
-        password: ''
-    }
 
     render() { 
-        const {email, password} = this.state;
-
         return (
             <View>
                 <Text style = {styles.header}>Please sign in</Text>
                 <Text>Email:</Text>
                 <TextInput 
                     style={styles.input} 
-                    value={email} 
+                    value={userStore.email} 
                     onChangeText={this.setEmail} 
                     keyboardType='email-address' />
                 <Text>Password:</Text>
                 <TextInput 
                     style={styles.input} 
-                    value={password} 
+                    value={userStore.password} 
                     onChangeText={this.setPassword} 
                     secureTextEntry />
 
@@ -33,8 +30,8 @@ class SignIn extends Component {
         );
     }
 
-    setPassword = password => this.setState({password});
-    setEmail = email => this.setState({email});
+    setPassword = password => userStore.password = password;
+    setEmail = email => userStore.email = email;
     signIn = () => console.log('----', 'sign in');
 }
 
