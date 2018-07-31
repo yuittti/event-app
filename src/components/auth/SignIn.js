@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
+import firebase from 'firebase';
 import { View, Text, TextInput, Platform, TouchableOpacity } from 'react-native';
 import userStore from '../../stores/user';
 
@@ -32,7 +33,14 @@ class SignIn extends Component {
 
     setPassword = password => userStore.password = password;
     setEmail = email => userStore.email = email;
-    signIn = () => console.log('----', 'sign in');
+    signIn = () => {
+        firebase.auth().signInWithEmailAndPassword(userStore.email, userStore.password)
+            .then((user) => {
+                userStore.user = user;
+                this.props.navigation.navigate('eventList');
+            });
+        console.log('----', 'sign in');
+    }
 }
 
 const styles = {
