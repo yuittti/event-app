@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import firebase from 'firebase';
 import { View, Text, TextInput, Platform, TouchableOpacity } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 
 @inject('user')
 @observer
@@ -39,9 +40,16 @@ class SignIn extends Component {
         firebase.auth().signInWithEmailAndPassword(user.email, user.password)
             .then((userEntity) => {
                 user.user = userEntity;
-                this.props.navigation.navigate('eventList');
+                // this.props.navigation.navigate('eventList');
+                const action = NavigationActions.reset({
+                    index: 0,
+                    actions: [
+                        NavigationActions.navigate({ routeName: 'eventList' })
+                    ]
+                })
+                this.props.navigation.dispatch(action);
             });
-        console.log('----', 'sign in');
+        
     }
 }
 
