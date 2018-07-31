@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import firebase from 'firebase';
 import { View, Text, TextInput, Platform, TouchableOpacity } from 'react-native';
-import userStore from '../../stores/user';
 
+@inject('user')
 @observer
 class SignIn extends Component {
 
     render() { 
+        const {user} = this.props;
         return (
             <View>
                 <Text style = {styles.header}>Please sign in</Text>
                 <Text>Email:</Text>
                 <TextInput 
                     style={styles.input} 
-                    value={userStore.email} 
+                    value={user.email} 
                     onChangeText={this.setEmail} 
                     keyboardType='email-address' />
                 <Text>Password:</Text>
                 <TextInput 
                     style={styles.input} 
-                    value={userStore.password} 
+                    value={user.password} 
                     onChangeText={this.setPassword} 
                     secureTextEntry />
 
@@ -31,12 +32,13 @@ class SignIn extends Component {
         );
     }
 
-    setPassword = password => userStore.password = password;
-    setEmail = email => userStore.email = email;
+    setPassword = password => this.props.user.password = password;
+    setEmail = email => this.props.user.email = email;
     signIn = () => {
-        firebase.auth().signInWithEmailAndPassword(userStore.email, userStore.password)
-            .then((user) => {
-                userStore.user = user;
+        const {user} = this.props;
+        firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+            .then((userEntity) => {
+                user.user = userEntity;
                 this.props.navigation.navigate('eventList');
             });
         console.log('----', 'sign in');

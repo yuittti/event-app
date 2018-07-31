@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, Text, ScrollView, SectionList, TouchableOpacity } from 'react-native';
 import EventCard from './EventCard';
-import {eventList} from '../../fixtures';
+// import {eventList} from '../../fixtures';
 import groupBy from 'lodash/groupBy';
 
 class EventList extends Component {
     
-    static defaultProps = {
-        events: eventList
-    };
+    // static defaultProps = {
+    //     events: eventList
+    // };
 
     render() { 
         const {onEventPress, events} = this.props;
