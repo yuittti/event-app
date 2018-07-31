@@ -7,7 +7,8 @@ class User extends BasicStore {
         super(...args);
 
         firebase.auth().onAuthStateChanged(user => {
-            this.getStore('navigation').reset('eventList');
+            const routeName = user ? 'lists' : 'auth';
+            this.getStore('navigation').reset(routeName);
         })
     }
 
