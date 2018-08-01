@@ -44,7 +44,7 @@ class SignIn extends Component {
                 const action = NavigationActions.reset({
                     index: 0,
                     actions: [
-                        NavigationActions.navigate({ routeName: 'eventList' })
+                        NavigationActions.navigate({ routeName: 'lists' })
                     ]
                 })
                 this.props.navigation.dispatch(action);

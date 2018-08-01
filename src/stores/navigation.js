@@ -1,9 +1,20 @@
-import {observable, action, computed} from 'mobx';
+import {observable, action, computed, toJS, autorun} from 'mobx';
 import AppNavigator from '../AppNavigator';
 import { NavigationActions } from 'react-navigation';
 import BasicStore from './BasicStore';
 
 class Navigation extends BasicStore {
+    constructor(...args) {
+        super(...args);
+
+        autorun(() => {
+            const userStore = this.getStore('user');
+            if (!userStore) return;
+            const routeName = userStore.user ? 'lists' : 'auth';
+            this.reset(routeName);
+        })
+    }
+
     @observable state = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('auth'));
 
     @action dispatch = (action) => {
@@ -13,7 +24,10 @@ class Navigation extends BasicStore {
     @computed get config() {
         return {
             dispatch: this.dispatch,
-            state: this.state
+            state: {
+                ...this.state,
+                routes: toJS(this.state.routes)
+            }
         }
     }
 

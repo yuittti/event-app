@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
+import { inject, observer, Observer } from 'mobx-react';
 import { TouchableOpacity, Text, SectionList, ActivityIndicator, StyleSheet } from 'react-native';
 import PersonCard from './PersonCard';
 
@@ -24,6 +24,11 @@ class PeopleList extends Component {
             renderSectionHeader = {({section}) => <Text style={styles.header}>{section.title}</Text>}
             renderItem = {({item}) => <TouchableOpacity onPress = {onPersonPress.bind(null, item.key)}>
                 <PersonCard person={item.person} />
+                <Observer>
+                    {() => 
+                        <Text>{item.person.email}</Text>
+                    }
+                </Observer>
             </TouchableOpacity>}
         />
     }
