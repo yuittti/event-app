@@ -33,7 +33,7 @@ class EventMapScreen extends Component {
         };
 
         const marker = this.location && <MapView.Marker
-                coordinate={this.location.coords}
+                coordinate={{...this.location.coords}}
                 title='event place'
             />
 
