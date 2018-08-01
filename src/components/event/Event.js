@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image, Button, TouchableOpacity } from 'react-native';
 import { eventList } from '../../fixtures';
 import ConfirmModal from '../common/ConfirmModal';
-import { web } from 'react-native-communications'
+import { web } from 'react-native-communications';
+import { observer, inject } from 'mobx-react';
 
+@inject('navigation')
+@observer
 class Event extends Component {
     static defaultProps = {
         event: eventList[0]
@@ -34,6 +37,10 @@ class Event extends Component {
                         title='Delete Event'
                         color='#F55'
                     />
+                    <Button
+                        onPress={this.goToMap}
+                        title='Show on Map'
+                    />
                 </View>
                 
                 <ConfirmModal 
@@ -49,6 +56,10 @@ class Event extends Component {
 
     goToUrl = () => {
         web(this.props.event.url);
+    }
+
+    goToMap = () => {
+        this.props.navigation.goTo('eventMap', { uid: this.props.event.uid })
     }
 
     handleDelete = () => {
