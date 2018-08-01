@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Image, Button } from 'react-native';
+import { View, StyleSheet, Text, Image, Button, TouchableOpacity } from 'react-native';
 import { eventList } from '../../fixtures';
 import ConfirmModal from '../common/ConfirmModal';
+import { web } from 'react-native-communications'
 
 class Event extends Component {
     static defaultProps = {
@@ -22,7 +23,10 @@ class Event extends Component {
                     source={{uri: 'https://picsum.photos/200/100?random'}} />
                 <Text style={styles.text}>{event.when}</Text>
                 <Text style={styles.text}>{event.where}</Text>
-                <Text style={styles.text}>{event.url}</Text>
+
+                <TouchableOpacity onPress={this.goToUrl}>
+                    <Text style={styles.text}>{event.url}</Text>
+                </TouchableOpacity>
 
                 <View style={styles.button}>
                     <Button 
@@ -31,7 +35,7 @@ class Event extends Component {
                         color='#F55'
                     />
                 </View>
-
+                
                 <ConfirmModal 
                     visible={this.state.confirmModal}
                     onConfirm={this.confirmDelete}
@@ -41,6 +45,10 @@ class Event extends Component {
                 </ConfirmModal>
             </View>
         );
+    }
+
+    goToUrl = () => {
+        web(this.props.event.url);
     }
 
     handleDelete = () => {
