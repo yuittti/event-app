@@ -1,6 +1,7 @@
-import EntitiesStore, { loadAllHelper } from './EntitiesStore';
+import EntitiesStore, { loadAllHelper, subscribeHelper } from './EntitiesStore';
 import { computed, action } from 'mobx';
 import groupBy from 'lodash/groupBy';
+import firebase from 'firebase';
 
 class PeopleStore extends EntitiesStore {
     @computed get sections() {
@@ -10,6 +11,10 @@ class PeopleStore extends EntitiesStore {
             title: `${letter}, ${list.length} people`,
             data: list.map(person => ({key: person.uid, person}))
         }));
+    }
+
+    @action updatePerson(uid, data) {
+        firebase.database().ref(`people/${uid}`).update(data);
     }
 
     @action loadAll = loadAllHelper('people');

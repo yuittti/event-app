@@ -7,10 +7,10 @@ import { observer } from 'mobx-react';
 class PersonCard extends Component {
     
     render() { 
-        const {email, firstName, lastName} = this.props.person;
+        const {email, firstName, lastName, avatar} = this.props.person;
         return (
             <Card style={styles.container}>
-                <Image source={{uri: 'https://picsum.photos/200/200?random'}} style={styles.avatar} />
+                <Image source={{uri: avatar || 'https://picsum.photos/200/200?random'}} style={styles.avatar} />
                 <View style={styles.content}>
                     <Text style={styles.email}>{email}</Text>
                     <Text>{firstName} {lastName}</Text>

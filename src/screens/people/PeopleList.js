@@ -5,6 +5,7 @@ import PeopleList from '../../components/people/PeopleList';
 import { text, email} from 'react-native-communications';
 
 @inject('people')
+@inject('navigation')
 @observer
 class PeopleListScreen extends Component {
     static navigationOptions = {
@@ -19,7 +20,8 @@ class PeopleListScreen extends Component {
     render() { 
         const {people} = this.props;
         if (people.loading) return this.getLoader();
-        return <PeopleList onPersonPress = {this.handlePress} />
+        return <PeopleList onPersonPress = {this.handlePress} 
+            onLongPress={this.handleLongPress} />
     }
 
     getLoader() {
@@ -29,6 +31,11 @@ class PeopleListScreen extends Component {
     handlePress = uid => {
         email(this.props.people.entities[uid].email);
         // text('+123456789', 'event notification');
+    }
+
+    handleLongPress = uid => {
+        console.log('handle long press', uid, this.props);
+        this.props.navigation.navigate('personPhoto', {uid});
     }
 }
 
